@@ -1,9 +1,5 @@
 ---
 # TODO: Add alternative steps for centos, other distros.
-- name: Apt dist upgrade
-  apt:
-    upgrade: dist
-    autoremove: yes
 
 - name: Install packages required for docker
   apt:
@@ -24,7 +20,7 @@
   rescue:
     - name: Install gpg key for ubuntu using local version.
       apt_key:
-        data: "{{ lookup('file', 'files/docker.asc') }}"
+        data: "{{ lookup('file', 'docker.asc') }}"
         state: present
 
 
@@ -52,13 +48,13 @@
 
 - name: Install docker community edition
   apt:
-    name: docker-ce
-    state: latest
+    name: "{{ hostvars[inventory_hostname].docker_lib | default(docker_lib) }}"
+    state: present
   notify:
     - start docker
 
-- name: Add "{{ cc_ssh_user }}"  user to docker group
+- name: Add "{{ ssh_user }}"  user to docker group
   user:
-    name: "{{ cc_ssh_user }}"
+    name: "{{ ssh_user }}"
     append: yes
     groups: docker
