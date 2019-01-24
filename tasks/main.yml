@@ -8,7 +8,6 @@
       - ca-certificates
       - linux-image-extra-virtual
     state: latest
-  with_items:
 
 - name: Install gpg key for ubuntu using local version.
   apt_key:
