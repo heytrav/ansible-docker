@@ -44,8 +44,8 @@
   notify:
     - start docker
 
-- name: Add "{{ ssh_user }}"  user to docker group
+- name: Add "{{ ansible_user }}"  user to docker group
   user:
-    name: "{{ ssh_user }}"
+    name: "{{ ansible_user }}"
     append: yes
     groups: docker
